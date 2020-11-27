@@ -22,6 +22,25 @@
         }
     }
 
+
+     // Notas
+     $notaFinal;
+     if (isset($_POST["calcNotas"])) {
+         if (isset($_POST["nota1"]) && isset($_POST["nota2"]) && isset($_POST["nota3"])) {
+             if (!empty($_POST["nota1"]) && !empty($_POST["nota2"]) && !empty($_POST["nota3"])) {
+                 
+ 
+                 $nota1 = intval($_POST["nota1"]);
+                 $nota2 = intval($_POST["nota2"]);;
+                 $nota3 = intval($_POST["nota3"]);;
+             
+
+                 $notaFinal = ($nota1 * 3 + $nota2 * 4 + $nota3 * 5) / 12;
+             }
+         }
+     }
+
+
     // Maior de 3 Números
     $maior;
     if (isset($_POST["calcMaior"])) {
@@ -111,6 +130,30 @@
             <?php
                 if (isset($classificao)) {
                     echo "<p>$classificao</p>";
+                }
+            ?>
+        </div>
+    </section>
+
+    <section class="notas">
+        <h1>Média das Notas</h1>
+        <form method="post">
+            <label for="nota1">Nota 1:</label>
+            <input id="nota1" type="text" name="nota1"><br><br>
+
+            <label for="nota2">Nota 2:</label>
+            <input id="nota2" type="text" name="nota2"><br><br>
+
+            <label for="nota3">Nota 3:</label>
+            <input id="nota3" type="text" name="nota3">
+
+            <input type="submit" name="calcNotas" value="Calcular Nota">
+        </form>
+
+        <div class="solution">
+            <?php
+                if (isset($notaFinal)) {
+                    echo "A nota final é de $notaFinal";
                 }
             ?>
         </div>
