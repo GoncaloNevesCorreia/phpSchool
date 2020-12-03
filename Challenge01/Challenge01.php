@@ -2,10 +2,6 @@
 
 include("./rainbowIterator.php");
 
-$red = 0;
-$green = 0;
-$blue = 0;
-
 
 
 ?>
@@ -31,16 +27,9 @@ $blue = 0;
     <?php
         echo "<h1>Using Iterator: $iterator</h1>";
 
-
-        for ($redIterator = 0; $redIterator < 255; $redIterator += $iterator) { 
-            $red = $redIterator;
-            
-            for ($greenIterator = 0; $greenIterator < 255; $greenIterator += $iterator) { 
-                $green = $greenIterator;
-                
-                for ($blueIterator = 0; $blueIterator < 255; $blueIterator += $iterator) {
-                    $blue = $blueIterator;
-                    
+        for ($red = 0; $red < 255; $red += $iterator) { 
+            for ($green = 0; $green < 255; $green += $iterator) { 
+                for ($blue = 0; $blue < 255; $blue += $iterator) {
                     echo "<span style='background-color: rgb($red,$green,$blue)' title='" . sprintf("#%02x%02x%02x", $red, $green, $blue) . "'></span>";
                 }
             }
