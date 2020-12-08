@@ -19,6 +19,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C11 - PHP Form Handling</title>
+    <link rel="stylesheet" href="css/c11.css">
 </head>
 
 <body>
@@ -60,25 +61,186 @@
         </div>
     </section>
 
-    <section class="reservation">
+    <section class="container">
         <h1>Reservation Request</h1>
-        
-        <div class="info">
-            <label>Arrival date:</label>
-            <input type="text" name="arrival">
-            
-            <label>Nights:</label>
-            <input type="text" name="nights">
+        <form method="POST">
+            <div class="fields">
+                <div class="title">
+                    <span>General Information</span>
+                </div>
 
-            <label>Adults:</label>
-            <input type="number" name="adults" min="1">
+                <div class="row">
+                    <div class="col-25">
+                        <label for="arrival">Arrival Date:</label>
+                    </div>
+                    <div class="col-50">
+                        <input type="text" id="arrival" name="arrival" placeholder="Arrival data...">
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span>Arrival Date is Inválid.</span>
+                        </div>
+                    </div>
+                </div>
 
-            <label>Children:</label>
-            <input type="number" name="children" min="1">
-        </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="nights">Nights: </label>
+                    </div>
+                    <div class="col-50">
+                        <input type="number" id="nights" name="nights" placeholder="Number of nights...">
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span>Nights must be a number.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="adults">Adults: </label>
+                    </div>
+                    <div class="col-50">
+                        <select id="adults" name="adults">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span>Adults must be a number.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="children">Children: </label>
+                    </div>
+                    <div class="col-50">
+                        <select id="children" name="children">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span>Children must be a number.</span>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
 
 
-    </section>
+            <div class="fields">
+                <div class="title">
+                    <span>Preferences</span>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Room type:</label>
+                    </div>
+                    <div class="col-50">
+                        <input type="radio" id="standard" name="room" value="standard">
+                        <label for="standard">Standard</label>
+
+                        <input type="radio" id="business" name="room" value="business">
+                        <label for="business">Business</label>
+
+                        <input type="radio" id="suite" name="room" value="suite">
+                        <label for="suite">Suite</label>
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span>Select a room type.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="">Bed type:</label>
+                    </div>
+                    <div class="col-50">
+                        <input type="radio" id="king" name="bed" value="king">
+                        <label for="king">King</label>
+
+                        <input type="radio" id="double" name="bed" value="double">
+                        <label for="double">Double Double</label>
+
+                        <input type="checkbox" id="smoking" name="smoking" value="smoking">
+                        <label for="smoking">Smoking</label>
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span>Select a bed type.</span>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="fields">
+                <div class="title">
+                    <span>Contact Information</span>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="name">Name:</label>
+                    </div>
+                    <div class="col-50">
+                        <input type="text" id="name" name="name" placeholder="Insert full name...">
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span>Name is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="email">Email: </label>
+                    </div>
+                    <div class="col-50">
+                        <input type="email" id="email" name="email" placeholder="Insert email...">
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span>Email address is invalid.</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="phone">Phone: </label>
+                    </div>
+                    <div class="col-50">
+                        <input type="number" id="phone" name="phone" placeholder="Insert phone number...">
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span>Phone number is invalid.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                    <input type="submit" value="Submit Reservation">
+                    <button class="btnClear" onclick="event.preventDefault();">Clear</button>
+                </div>
+        </form>
+    </section>  
 
 
 </body>
