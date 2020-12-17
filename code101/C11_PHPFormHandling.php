@@ -2,13 +2,54 @@
     $details;
 
     if (isset($_POST["classRegistration"])) {
-        if (isset($_POST["name"]) && isset($_POST["email"]) && isset($_POST["time"]) && isset($_POST["classDetails"]) && isset($_POST["gender"])) {
-            if (!empty($_POST["name"]) && !empty($_POST["email"]) && !empty($_POST["time"]) && !empty($_POST["classDetails"]) && !empty($_POST["gender"])) {
-                $details = [$_POST["name"], $_POST["email"], $_POST["time"], $_POST["classDetails"], $_POST["gender"]];
+        if (POST_isset("name", "email", "time", "classDetails", "gender")) {
+            $name = clean_input($_POST["name"]);
+            $email = clean_input($_POST["email"]);
+            $time = clean_input($_POST["time"]);
+            $classDetails = clean_input($_POST["classDetails"]);
+            $gender = clean_input($_POST["gender"]);
+
+            $details = [$name, $email, $time, $classDetails, $gender];
+        }
+   
+    }
+
+    function clean_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+    
+    function POST_isset(...$arr_input) {
+        foreach ($arr_input as $value) {
+            if(!isset($_POST[$value])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    $arrivalErr = $nightsErr = $adultsErr = $childrenErr = $roomErr = $bedErr = $nameErr = $emailErr = $phoneErr = "";
+    $arrival = $nights = $adults = $children = $room = $bed = $name = $email = $phone = "";
+
+    if (isset($_POST["form-1"])) {
+        if (POST_isset("arrival", "nights", "adults", "children", "room", "bed", "name", "email", "phone")) {
+            
+            if (!empty($_POST["arrival"])) {
+                $arrival = clean_input($_POST["arrival"]);
+            } else {
+                $arrivalErr = "Arrival Date is Inválid.";
+            }
+
+            if (!empty($_POST["nights"])) {
+                $nights = clean_input($_POST["nights"]);
+            } else {
+                $nightsErr = "";
             }
         }
     }
-
 ?>
 
 
@@ -63,7 +104,7 @@
 
     <section class="container">
         <h1>Reservation Request</h1>
-        <form method="POST">
+        <form method="POST" id="form-1">
             <div class="fields">
                 <div class="title">
                     <span>General Information</span>
@@ -78,7 +119,7 @@
                     </div>
                     <div class="col-25">
                         <div class="warning">
-                            <span>Arrival Date is Inválid.</span>
+                            <span></span>
                         </div>
                     </div>
                 </div>
@@ -236,13 +277,20 @@
             </div>
 
             <div class="row">
-                    <input type="submit" value="Submit Reservation">
-                    <button class="btnClear" onclick="event.preventDefault();">Clear</button>
+                    <input name="form-1" type="submit" value="Submit Reservation">
+                    <button class="btnClear">Clear</button>
                 </div>
         </form>
     </section>  
 
 
+<script>
+    const btnClear = document.querySelector(".btnClear");
+    btnClear.addEventListener("click", event => {
+        event.preventDefault();
+        document.querySelector("#form-1").reset();
+    });
+</script>
 </body>
 
 </html>
