@@ -21,35 +21,29 @@
         return $data;
     }
     
-    function POST_isset(...$arr_input) {
-        foreach ($arr_input as $value) {
-            if(!isset($_POST[$value])) {
-                return false;
-            }
+    function POST_isset($name, $errorMessage) {
+        if (isset($_POST[$name])) {
+
+            return ["value" => clean_input($_POST[$name]), 
+                    "errorMessage" => ""
+                ];
+        } else {
+            return ["value" => "", 
+                    "errorMessage" => $errorMessage
+                ];
         }
-        return true;
+    }
+
+    function print_error_message($variable) {
+        echo (!empty($variable)) ? $variable["errorMessage"] : "";
+    }
+
+    function print_value_on_select($variable, $num) {
+        echo (!empty($variable)) ? ($variable["value"] == $num) ? "selected" : "" : "";
     }
 
 
-    $arrivalErr = $nightsErr = $adultsErr = $childrenErr = $roomErr = $bedErr = $nameErr = $emailErr = $phoneErr = "";
-    $arrival = $nights = $adults = $children = $room = $bed = $name = $email = $phone = "";
-
-    if (isset($_POST["form-1"])) {
-        if (POST_isset("arrival", "nights", "adults", "children", "room", "bed", "name", "email", "phone")) {
-            
-            if (!empty($_POST["arrival"])) {
-                $arrival = clean_input($_POST["arrival"]);
-            } else {
-                $arrivalErr = "Arrival Date is Inválid.";
-            }
-
-            if (!empty($_POST["nights"])) {
-                $nights = clean_input($_POST["nights"]);
-            } else {
-                $nightsErr = "";
-            }
-        }
-    }
+    
 ?>
 
 
@@ -102,6 +96,26 @@
         </div>
     </section>
 
+
+
+
+    <?php
+
+    $arrival = $nights = $adults = $children = $room = $bed = $name = $email = $phone = [];
+
+    if (isset($_POST["form-1"])) {
+        $arrival = POST_isset("arrival", "Arrival Date is Inválid.");
+        $nights = POST_isset("nights", "Nights must be a number.");
+        $adults = POST_isset("adults", "Adults must be a number.");
+        $children = POST_isset("children", "Children must be a number.");
+        $room = POST_isset("room", "Select a room type.");
+        $bed = POST_isset("bed", "Select a bed type.");
+        $name = POST_isset("name", "Name is required.");
+        $email = POST_isset("email", "Email address is invalid.");
+        $phone = POST_isset("phone", "Phone number is invalid.");
+    }
+    ?>
+
     <section class="container">
         <h1>Reservation Request</h1>
         <form method="POST" id="form-1">
@@ -115,11 +129,11 @@
                         <label for="arrival">Arrival Date:</label>
                     </div>
                     <div class="col-50">
-                        <input type="text" id="arrival" name="arrival" placeholder="Arrival data...">
+                        <input type="text" id="arrival" name="arrival" placeholder="Arrival data..." value="<?php echo (!empty($arrival)) ? $arrival["value"] : "" ?>">
                     </div>
                     <div class="col-25">
                         <div class="warning">
-                            <span></span>
+                            <span><?php print_error_message($arrival) ?></span>
                         </div>
                     </div>
                 </div>
@@ -129,11 +143,11 @@
                         <label for="nights">Nights: </label>
                     </div>
                     <div class="col-50">
-                        <input type="number" id="nights" name="nights" placeholder="Number of nights...">
+                        <input type="number" id="nights" name="nights" placeholder="Number of nights..." value="<?php echo (!empty($nights)) ? $nights["value"] : "" ?>">
                     </div>
                     <div class="col-25">
                         <div class="warning">
-                            <span>Nights must be a number.</span>
+                            <span><?php print_error_message($nights) ?></span>
                         </div>
                     </div>
                 </div>
@@ -143,14 +157,14 @@
                     </div>
                     <div class="col-50">
                         <select id="adults" name="adults">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
+                            <option <?php print_value_on_select($adults, 1); ?> value="1">1</option>
+                            <option <?php print_value_on_select($adults, 2); ?> value="2">2</option>
+                            <option <?php print_value_on_select($adults, 3); ?> value="3">3</option>
                         </select>
                     </div>
                     <div class="col-25">
                         <div class="warning">
-                            <span>Adults must be a number.</span>
+                            <span><?php print_error_message($adults) ?></span>
                         </div>
                     </div>
                 </div>
@@ -161,15 +175,15 @@
                     </div>
                     <div class="col-50">
                         <select id="children" name="children">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
+                            <option <?php print_value_on_select($children, 0); ?> value="0">0</option>
+                            <option <?php print_value_on_select($children, 1); ?> value="1">1</option>
+                            <option <?php print_value_on_select($children, 2); ?> value="2">2</option>
+                            <option <?php print_value_on_select($children, 3); ?> value="3">3</option>
                         </select>
                     </div>
                     <div class="col-25">
                         <div class="warning">
-                            <span>Children must be a number.</span>
+                            <span><?php print_error_message($children) ?></span>
                         </div>
                     </div>
                 </div>
@@ -199,7 +213,7 @@
                     </div>
                     <div class="col-25">
                         <div class="warning">
-                            <span>Select a room type.</span>
+                            <span><?php print_error_message($room) ?></span>
                         </div>
                     </div>
                 </div>
@@ -220,7 +234,7 @@
                     </div>
                     <div class="col-25">
                         <div class="warning">
-                            <span>Select a bed type.</span>
+                            <span><?php print_error_message($bed) ?></span>
                         </div>
                     </div>
                 </div>
@@ -237,11 +251,11 @@
                         <label for="name">Name:</label>
                     </div>
                     <div class="col-50">
-                        <input type="text" id="name" name="name" placeholder="Insert full name...">
+                        <input type="text" id="name" name="name" placeholder="Insert full name..." value="<?php echo (!empty($name)) ? $name["value"] : "" ?>">
                     </div>
                     <div class="col-25">
                         <div class="warning">
-                            <span>Name is required.</span>
+                            <span><?php print_error_message($nights) ?></span>
                         </div>
                     </div>
                 </div>
@@ -251,11 +265,11 @@
                         <label for="email">Email: </label>
                     </div>
                     <div class="col-50">
-                        <input type="email" id="email" name="email" placeholder="Insert email...">
+                        <input type="email" id="email" name="email" placeholder="Insert email..." value="<?php echo (!empty($email)) ? $email["value"] : "" ?>">
                     </div>
                     <div class="col-25">
                         <div class="warning">
-                            <span>Email address is invalid.</span>
+                            <span><?php print_error_message($email) ?></span>
                         </div>
                     </div>
                 </div>
@@ -266,11 +280,11 @@
                         <label for="phone">Phone: </label>
                     </div>
                     <div class="col-50">
-                        <input type="number" id="phone" name="phone" placeholder="Insert phone number...">
+                        <input type="number" id="phone" name="phone" placeholder="Insert phone number..." value="<?php echo (!empty($phone)) ? $phone["value"] : "" ?>">
                     </div>
                     <div class="col-25">
                         <div class="warning">
-                            <span>Phone number is invalid.</span>
+                            <span><?php print_error_message($phone) ?></span>
                         </div>
                     </div>
                 </div>
