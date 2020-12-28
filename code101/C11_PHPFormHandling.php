@@ -1,47 +1,10 @@
 <?php
-    $details;
-
-    if (isset($_POST["classRegistration"])) {
-        if (POST_isset("name", "email", "time", "classDetails", "gender")) {
-            $name = clean_input($_POST["name"]);
-            $email = clean_input($_POST["email"]);
-            $time = clean_input($_POST["time"]);
-            $classDetails = clean_input($_POST["classDetails"]);
-            $gender = clean_input($_POST["gender"]);
-
-            $details = [$name, $email, $time, $classDetails, $gender];
-        }
-   
-    }
-
     function clean_input($data) {
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
     }
-    
-    function POST_isset($name, $errorMessage) {
-        if (isset($_POST[$name])) {
-
-            return ["value" => clean_input($_POST[$name]), 
-                    "errorMessage" => ""
-                ];
-        } else {
-            return ["value" => "", 
-                    "errorMessage" => $errorMessage
-                ];
-        }
-    }
-
-    function print_error_message($variable) {
-        echo (!empty($variable)) ? $variable["errorMessage"] : "";
-    }
-
-    function print_value_on_select($variable, $num) {
-        echo (!empty($variable)) ? ($variable["value"] == $num) ? "selected" : "" : "";
-    }
-
 
     
 ?>
@@ -58,7 +21,250 @@
 </head>
 
 <body>
-    <section class="registration">
+    <?php
+
+    
+    ?>
+
+    <section class="container">
+        <h1></h1>
+        <h1>Reservation Request</h1>
+        <form method="POST" id="form-1">
+            <div class="fields">
+                <div class="title">
+                    <span>General Information</span>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="arrival">Arrival Date:</label>
+                    </div>
+                    <div class="col-50">
+                        <input type="text" id="arrival" name="arrival" placeholder="Arrival data..."
+                            value="">
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="nights">Nights: </label>
+                    </div>
+                    <div class="col-50">
+                        <input type="number" id="nights" name="nights" placeholder="Number of nights..."
+                            value="">
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="adults">Adults: </label>
+                    </div>
+                    <div class="col-50">
+                        <select id="adults" name="adults">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="children">Children: </label>
+                    </div>
+                    <div class="col-50">
+                        <select id="children" name="children">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+            <div class="fields">
+                <div class="title">
+                    <span>Preferences</span>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label>Room type:</label>
+                    </div>
+                    <div class="col-50">
+                        <input type="radio" id="standard" name="room" value="standard">
+                        <label for="standard">Standard</label>
+
+                        <input type="radio" id="business" name="room" value="business">
+                        <label for="business">Business</label>
+
+                        <input type="radio" id="suite" name="room" value="suite">
+                        <label for="suite">Suite</label>
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="">Bed type:</label>
+                    </div>
+                    <div class="col-50">
+                        <input type="radio" id="king" name="bed" value="king">
+                        <label for="king">King</label>
+
+                        <input type="radio" id="double" name="bed" value="double">
+                        <label for="double">Double Double</label>
+
+                        <input type="checkbox" id="smoking" name="smoking" value="smoking">
+                        <label for="smoking">Smoking</label>
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="fields">
+                <div class="title">
+                    <span>Contact Information</span>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="name">Name:</label>
+                    </div>
+                    <div class="col-50">
+                        <input type="text" id="name" name="name" placeholder="Insert full name..."
+                            value="">
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="email">Email: </label>
+                    </div>
+                    <div class="col-50">
+                        <input type="email" id="email" name="email" placeholder="Insert email..."
+                            value="">
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="phone">Phone: </label>
+                    </div>
+                    <div class="col-50">
+                        <input type="number" id="phone" name="phone" placeholder="Insert phone number..."
+                            value="">
+                    </div>
+                    <div class="col-25">
+                        <div class="warning">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <input name="form-1" type="submit" value="Submit Reservation">
+                <button class="btnClear" name="form-clear">Clear</button>
+            </div>
+        </form>
+
+        <div class="solution">
+            <h1>Your Given details are as:</h1>
+            <?php
+                if (isset($_POST["form-1"])) {
+
+                    $arrival = $nights = $adults = $children = $room = $bed = $smoking = $name = $email = $phone = "";
+
+                
+                    
+                    $arrival = (isset($_POST["arrival"])) ? clean_input($_POST["arrival"]) : "";
+                    $nights = (isset($_POST["nights"])) ? clean_input($_POST["nights"]) : "";
+                    $adults = (isset($_POST["adults"])) ? clean_input($_POST["adults"]) : "";
+                    $children = (isset($_POST["children"])) ? clean_input($_POST["children"]) : "";
+                    $room = (isset($_POST["room"])) ? clean_input($_POST["room"]) : "";
+                    $bed = (isset($_POST["bed"])) ? clean_input($_POST["bed"]) : "";
+                    $smoking = (isset($_POST["smoking"])) ? clean_input($_POST["smoking"]) : "";
+                    $name = (isset($_POST["name"])) ? clean_input($_POST["name"]) : "";
+                    $email = (isset($_POST["email"])) ? clean_input($_POST["email"]) : "";
+                    $phone = (isset($_POST["phone"])) ? clean_input($_POST["phone"]) : "";
+
+                    $smokeValue = (!empty($smoking)) ? "Yes" : "No"; 
+
+                    echo "<p> <strong>Arrival:</strong> $arrival.</p>
+                    <p> <strong>Nights:</strong> $nights.</p>
+                    <p> <strong>Adults:</strong> $adults.</p>
+                    <p> <strong>Children:</strong> $children.</p>
+                    <p> <strong>Room:</strong> $room.</p>
+                    <p> <strong>Bed:</strong> $bed.</p>
+                    <p> <strong>Smoking:</strong> $smokeValue.</p>
+                    <p> <strong>Email:</strong> $email.</p>
+                    <p> <strong>Phone:</strong> $phone.</p>";
+                }
+            ?>
+        </div>
+    </section>
+
+
+
+
+    <?php
+        $details;
+
+        if (isset($_POST["classRegistration"])) {
+            $name = (isset($_POST["name"])) ? clean_input($_POST["name"]) : "";
+            $email = (isset($_POST["email"])) ? clean_input($_POST["email"]) : "";
+            $time = (isset($_POST["time"])) ? clean_input($_POST["time"]) : "";
+            $classDetails = (isset($_POST["classDetails"])) ? clean_input($_POST["classDetails"]) : "";
+            $gender = (isset($_POST["gender"])) ? clean_input($_POST["gender"]) : "";
+
+            $details = [$name, $email, $time, $classDetails, $gender];
+        }
+    ?>
+        <section class="registration">
         <h1>Absolute Class Registration</h1>
         <form method="post">
             <label>Name:</label>
@@ -99,212 +305,7 @@
 
 
 
-    <?php
 
-    $arrival = $nights = $adults = $children = $room = $bed = $name = $email = $phone = [];
-
-    if (isset($_POST["form-1"])) {
-        $arrival = POST_isset("arrival", "Arrival Date is Inválid.");
-        $nights = POST_isset("nights", "Nights must be a number.");
-        $adults = POST_isset("adults", "Adults must be a number.");
-        $children = POST_isset("children", "Children must be a number.");
-        $room = POST_isset("room", "Select a room type.");
-        $bed = POST_isset("bed", "Select a bed type.");
-        $name = POST_isset("name", "Name is required.");
-        $email = POST_isset("email", "Email address is invalid.");
-        $phone = POST_isset("phone", "Phone number is invalid.");
-    }
-    ?>
-
-    <section class="container">
-        <h1>Reservation Request</h1>
-        <form method="POST" id="form-1">
-            <div class="fields">
-                <div class="title">
-                    <span>General Information</span>
-                </div>
-
-                <div class="row">
-                    <div class="col-25">
-                        <label for="arrival">Arrival Date:</label>
-                    </div>
-                    <div class="col-50">
-                        <input type="text" id="arrival" name="arrival" placeholder="Arrival data..." value="<?php echo (!empty($arrival)) ? $arrival["value"] : "" ?>">
-                    </div>
-                    <div class="col-25">
-                        <div class="warning">
-                            <span><?php print_error_message($arrival) ?></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-25">
-                        <label for="nights">Nights: </label>
-                    </div>
-                    <div class="col-50">
-                        <input type="number" id="nights" name="nights" placeholder="Number of nights..." value="<?php echo (!empty($nights)) ? $nights["value"] : "" ?>">
-                    </div>
-                    <div class="col-25">
-                        <div class="warning">
-                            <span><?php print_error_message($nights) ?></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-25">
-                        <label for="adults">Adults: </label>
-                    </div>
-                    <div class="col-50">
-                        <select id="adults" name="adults">
-                            <option <?php print_value_on_select($adults, 1); ?> value="1">1</option>
-                            <option <?php print_value_on_select($adults, 2); ?> value="2">2</option>
-                            <option <?php print_value_on_select($adults, 3); ?> value="3">3</option>
-                        </select>
-                    </div>
-                    <div class="col-25">
-                        <div class="warning">
-                            <span><?php print_error_message($adults) ?></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-25">
-                        <label for="children">Children: </label>
-                    </div>
-                    <div class="col-50">
-                        <select id="children" name="children">
-                            <option <?php print_value_on_select($children, 0); ?> value="0">0</option>
-                            <option <?php print_value_on_select($children, 1); ?> value="1">1</option>
-                            <option <?php print_value_on_select($children, 2); ?> value="2">2</option>
-                            <option <?php print_value_on_select($children, 3); ?> value="3">3</option>
-                        </select>
-                    </div>
-                    <div class="col-25">
-                        <div class="warning">
-                            <span><?php print_error_message($children) ?></span>
-                        </div>
-                    </div>
-                </div>
-                
-                
-            </div>
-
-
-            <div class="fields">
-                <div class="title">
-                    <span>Preferences</span>
-                </div>
-
-                <div class="row">
-                    <div class="col-25">
-                        <label>Room type:</label>
-                    </div>
-                    <div class="col-50">
-                        <input type="radio" id="standard" name="room" value="standard">
-                        <label for="standard">Standard</label>
-
-                        <input type="radio" id="business" name="room" value="business">
-                        <label for="business">Business</label>
-
-                        <input type="radio" id="suite" name="room" value="suite">
-                        <label for="suite">Suite</label>
-                    </div>
-                    <div class="col-25">
-                        <div class="warning">
-                            <span><?php print_error_message($room) ?></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-25">
-                        <label for="">Bed type:</label>
-                    </div>
-                    <div class="col-50">
-                        <input type="radio" id="king" name="bed" value="king">
-                        <label for="king">King</label>
-
-                        <input type="radio" id="double" name="bed" value="double">
-                        <label for="double">Double Double</label>
-
-                        <input type="checkbox" id="smoking" name="smoking" value="smoking">
-                        <label for="smoking">Smoking</label>
-                    </div>
-                    <div class="col-25">
-                        <div class="warning">
-                            <span><?php print_error_message($bed) ?></span>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-
-            <div class="fields">
-                <div class="title">
-                    <span>Contact Information</span>
-                </div>
-
-                <div class="row">
-                    <div class="col-25">
-                        <label for="name">Name:</label>
-                    </div>
-                    <div class="col-50">
-                        <input type="text" id="name" name="name" placeholder="Insert full name..." value="<?php echo (!empty($name)) ? $name["value"] : "" ?>">
-                    </div>
-                    <div class="col-25">
-                        <div class="warning">
-                            <span><?php print_error_message($nights) ?></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-25">
-                        <label for="email">Email: </label>
-                    </div>
-                    <div class="col-50">
-                        <input type="email" id="email" name="email" placeholder="Insert email..." value="<?php echo (!empty($email)) ? $email["value"] : "" ?>">
-                    </div>
-                    <div class="col-25">
-                        <div class="warning">
-                            <span><?php print_error_message($email) ?></span>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-25">
-                        <label for="phone">Phone: </label>
-                    </div>
-                    <div class="col-50">
-                        <input type="number" id="phone" name="phone" placeholder="Insert phone number..." value="<?php echo (!empty($phone)) ? $phone["value"] : "" ?>">
-                    </div>
-                    <div class="col-25">
-                        <div class="warning">
-                            <span><?php print_error_message($phone) ?></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                    <input name="form-1" type="submit" value="Submit Reservation">
-                    <button class="btnClear">Clear</button>
-                </div>
-        </form>
-    </section>  
-
-
-<script>
-    const btnClear = document.querySelector(".btnClear");
-    btnClear.addEventListener("click", event => {
-        event.preventDefault();
-        document.querySelector("#form-1").reset();
-    });
-</script>
 </body>
 
 </html>
