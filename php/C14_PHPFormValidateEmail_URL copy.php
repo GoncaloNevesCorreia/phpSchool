@@ -30,10 +30,6 @@
         echo (!empty($variable)) ? $variable["value"] : "";
     }
 
-    function get_value($variable) {
-        return (!empty($variable)) ? $variable["value"] : "";
-    }
-
     function print_value_on_selected($variable, $value, $propName) {
         echo (!empty($variable)) ? ($variable["value"] == $value) ? $propName : "" : "";
     }
@@ -72,7 +68,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C15 - PHP Form Complete Form Example</title>
+    <title>C14 - PHP Form Validate Email</title>
     <link rel="stylesheet" href="css/c13.css">
 </head>
 <body>

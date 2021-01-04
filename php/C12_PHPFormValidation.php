@@ -28,11 +28,7 @@
     function print_value($variable) {
         echo (!empty($variable)) ? $variable["value"] : "";
     }
-
-    function get_value($variable) {
-        return (!empty($variable)) ? $variable["value"] : "";
-    }
-
+    
     function print_value_on_selected($variable, $value, $propName) {
         echo (!empty($variable)) ? ($variable["value"] == $value) ? $propName : "" : "";
     }

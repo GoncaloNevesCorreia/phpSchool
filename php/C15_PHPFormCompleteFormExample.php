@@ -30,33 +30,27 @@
         echo (!empty($variable)) ? $variable["value"] : "";
     }
 
-    function get_value($variable) {
-        return (!empty($variable)) ? $variable["value"] : "";
-    }
-
     function print_value_on_selected($variable, $value, $propName) {
-        echo (!empty($variable)) ? ($variable["value"] == $value) ? $propName : "" : "";
+        echo (!empty($variable) && $variable["value"] == $value) ? $propName : "";
     }
 
-    function validate_Date($date) {
+    function valid_Date($date) {
         $spliter = "";
         if (str_contains($date, '/')) {
             $spliter = '/';
         } else if(str_contains($date, '-')) {
             $spliter = '-';
-        } 
+        }
 
         if ($spliter !== "") {
-            $dateExploded = explode($spliter, $date);
-            if (count($dateExploded) === 3) {
-                if (strlen($dateExploded[0]) <= 2 && strlen($dateExploded[1]) <= 2 && strlen($dateExploded[2]) == 4) {
-                    $day = $dateExploded[0];
-                    $month = $dateExploded[1];
-                    $year = $dateExploded[2];
+            $dateArr = explode($spliter, $date);
+            if (count($dateArr) === 3) {
+                if (strlen($dateArr[0]) <= 2 && strlen($dateArr[1]) <= 2 && strlen($dateArr[2]) == 4) {
+                    $day = $dateArr[0];
+                    $month = $dateArr[1];
+                    $year = $dateArr[2];
                     
-                    if (checkdate($month, $day, $year)) {
-                        return true;
-                    }
+                    if (checkdate($month, $day, $year)) return true;
                 }
             } 
         }
@@ -72,7 +66,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C13 - PHP Form Required Fields</title>
+    <title>C15 - PHP Form Complete Form Example</title>
     <link rel="stylesheet" href="css/c13.css">
 </head>
 <body>
@@ -82,28 +76,28 @@
 
 
     if (isset($_POST["form-1"])) {
-        $arrival = validate_POST("arrival", "Arrival is required.");
-        $nights = validate_POST("nights", "Nights must be a number.");
-        $adults = validate_POST("adults", "Adults must be a number.");
-        $children = validate_POST("children", "Children must be a number.");
-        $room = validate_POST("room", "Select a room type.");
-        $bed = validate_POST("bed", "Select a bed type.");
-        $smoking = validate_POST("smoking", "");
-        $name = validate_POST("name", "Name is required.");
-        $email = validate_POST("email", "Email address is invalid.");
-        $phone = validate_POST("phone", "Phone number is invalid.");
+        $arrival = validate_POST(name: "arrival", errorMessage: "Arrival is required.");
+        $nights = validate_POST(name: "nights", errorMessage: "Nights must be a number.");
+        $adults = validate_POST(name: "adults", errorMessage: "Adults must be a number.");
+        $children = validate_POST(name: "children", errorMessage: "Children must be a number.");
+        $room = validate_POST(name: "room", errorMessage: "Select a room type.");
+        $bed = validate_POST(name: "bed", errorMessage: "Select a bed type.");
+        $smoking = validate_POST(name: "smoking", errorMessage: "");
+        $name = validate_POST(name: "name", errorMessage: "Name is required.");
+        $email = validate_POST(name: "email",errorMessage: "Email address is required.");
+        $phone = validate_POST(name: "phone", errorMessage: "Phone number is required.");
 
-        if ($arrival["value"] !== "") {
-            $validDate = validate_Date($arrival["value"]);
-            $arrival["errorMessage"] = (!$validDate) ? "Inválid date format!" : "";
+        if ($arrival["value"] !== "" && !valid_Date($arrival["value"])) {
+            $arrival["errorMessage"] = "Inválid date format!";
         }
 
         if ($name["value"] !== "" && !preg_match("/^[a-zA-Z-' ]*$/", $name["value"])) {
             $name["errorMessage"] = "Only letters and white space allowed.";
         }
 
-    
-        
+        if ($email["value"] !== "" && !filter_var($email["value"], FILTER_VALIDATE_EMAIL)) {
+            $email["errorMessage"] = "Invalid email format!";
+        }
 
     }
 ?>
@@ -121,7 +115,7 @@
                     <label for="arrival">Arrival Date:</label>
                 </div>
                 <div class="col-50">
-                    <input type="text" id="arrival" name="arrival" placeholder="Arrival data..."
+                    <input type="text" id="arrival" name="arrival" placeholder="Arrival data. Ex: 20/01/2021"
                         value="<?php print_value($arrival); ?>">
                 </div>
                 <div class="col-25">
