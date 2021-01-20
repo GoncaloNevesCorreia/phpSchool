@@ -161,3 +161,7 @@ background: white;
     padding-bottom: 0.5em;
 }
 
+.error {
+  color: red;
+   
+}
